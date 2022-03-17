@@ -21,10 +21,14 @@ EspMQTTClient client(
 void setup() 
 {
   Serial.begin(115200);
+  Serial.println();
+  Serial.println("====Projet DEV - Setup====");
 }
  
 void loop() 
 {
+  Serial.print(".");
+  
   client.loop();
 
   if(stateChanged()){
@@ -58,14 +62,17 @@ bool stateChanged(){
 
 bool readTiltSensor(){
   //TODO
+  return true;
 }
 
 bool readPhotoSensor(){
   //TODO
+  return true;
 }
 
 bool readIMU(){
   //TODO
+  return true;
 }
 
 void onConnectionEstablished(){
