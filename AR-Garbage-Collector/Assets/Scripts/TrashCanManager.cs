@@ -37,9 +37,9 @@ public class TrashCanManager : MonoBehaviour
     public void SetFilledTrashCanCount()
 
     {
-        for (int i = 0; i < trashCanList.Count; i++)
+        for (int i = _filledTrashCanList.Count; i < trashCanList.Count; i++)
         {
-            if (trashCanList[i].GetIsFull())
+            if (trashCanList[i].GetIsFull() && !_filledTrashCanList.Contains(trashCanList[i]))
             {
                 _filledTrashCanList.Add(trashCanList[i]);
             }

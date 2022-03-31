@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MoveTo : MonoBehaviour
 {
-    private Transform _goal;
+    private GameObject _goal;
     public TrashCanManager trashCanManager;
     private NavMeshAgent _agent;
     // Start is called before the first frame update
@@ -19,8 +18,8 @@ public class MoveTo : MonoBehaviour
     {
         if (trashCanManager.GetFilledTrashCan() > 2)
         {
-            _goal.position = trashCanManager.GetTask().transform.position;
-            _agent.destination = _goal.position;  
+            _goal = trashCanManager.GetTask();
+            _agent.destination = _goal.transform.position;  
         }
     }
 }
