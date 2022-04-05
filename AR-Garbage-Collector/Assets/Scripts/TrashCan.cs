@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrashCan : MonoBehaviour
 {
-    private bool _isFull;
+    public bool _isFull;
 
     public bool GetIsFull()
     {
@@ -18,8 +16,14 @@ public class TrashCan : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+
+    public void OnCollisionEnter(Collision collision)
     {
-        
+        if (collision.gameObject.name == "Car")
+        {
+            _isFull = false;
+            Debug.Log("trashcan collector on :"+ gameObject.name);
+            Debug.Log(gameObject.name + " is now: " +GetIsFull());
+        }    
     }
 }
