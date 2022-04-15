@@ -1,5 +1,8 @@
 #include "EspMQTTClient.h"
 
+// TILT : GND = entrée | D3 = Sortie
+const int sensorPin = 3;
+
 // PHOTO RESISTOR : 3v3 = entrée PR | GND = 10kO | A0 = Sortie avec resistance
 const int ldrPin = A0;
 
@@ -11,7 +14,7 @@ const char* ssid = "AP_Thomas";
 const char* password = "122345678";
 
 const String serialNumber = "16543465453";
-const int sensorType = 2; // 1 = Tilt | 2 = Photo | 3 = IMU
+const int sensorType = 1; // 1 = Tilt | 2 = Photo | 3 = IMU
 
 bool trashCanIsFull = false;
 
@@ -43,19 +46,19 @@ void loop()
 
   checkSensor();
 
-  delay(1000); 
+  delay(500); 
 }
 
 void checkSensor(){
   switch(sensorType){
     case 1:
-      // TODO      
+      checkTilt();     
       break;
     case 2:
       checkPhotoResistor();
       break;      
     case 3:
-      // TODO      
+      checkIMU();      
       break;
   }
 }
@@ -74,12 +77,34 @@ void initSensor(){
   }
 }
 
+
+// ===== TILT =====
+
 void initTilt(){
-  // TODO  
+  pinMode(sensorPin, INPUT);
+  digitalWrite(sensorPin, HIGH);
 }
 
-void initIMU(){
-  // TODO  
+void checkTilt(){
+
+  Serial.println(digitalRead(sensorPin));
+  
+  if(digitalRead(sensorPin))
+  {
+    Serial.println("La poubelle est inclinée");
+
+    while(digitalRead(sensorPin)){
+      delay(100);
+    }
+              
+    Serial.println("La poubelle est a plat");
+
+    trashCanIsFull = !trashCanIsFull;
+    // publishMeasure(); 
+    Serial.print("Etat de la poubelle : ");
+    Serial.println(trashCanIsFull);
+  }  
+
 }
 
 // ===== PHOTO RESISTOR =====
@@ -108,6 +133,16 @@ void checkPhotoResistor(){
 
 bool photoResistorIsOpen(){
   return analogRead(ldrPin) >= 500 ? true : false; 
+}
+
+// ===== IMU =====
+
+void initIMU(){
+  // TODO  
+}
+
+void checkIMU(){
+  // TODO
 }
 
 // ===== MQTT =====
