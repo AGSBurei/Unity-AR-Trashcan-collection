@@ -5,6 +5,7 @@ const String topic = "STC/sensor";
 // const char* password = "22061995";
 const char* ssid = "AP_Thomas";
 const char* password = "122345678";
+
 const String serialNumber = "16543465453";
 const int sensorType = 1; // 1 = Tilt | 2 = Photo | 3 = IMU
 
@@ -29,7 +30,7 @@ void setup()
  
 void loop() 
 {
-  publishMeasure();
+  //publishMeasure();
   
   Serial.print(".");
   
