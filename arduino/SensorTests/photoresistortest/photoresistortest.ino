@@ -1,6 +1,7 @@
 const int ldrPin = A0;
 
 bool trashCanIsFull = false;
+int limitPhotoResistor = 600;
 
 void setup(){
   Serial.begin(115200);
@@ -32,5 +33,8 @@ void checkTrashCan2(){
 }
 
 bool trashCan2IsOpen(){
-  return analogRead(ldrPin) >= 500 ? true : false; 
+
+  Serial.println(analogRead(ldrPin));
+  
+  return analogRead(ldrPin) >= limitPhotoResistor ? true : false; 
 }
