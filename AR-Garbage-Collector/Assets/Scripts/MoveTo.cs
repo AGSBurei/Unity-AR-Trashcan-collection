@@ -104,8 +104,10 @@ public class MoveTo : MonoBehaviour
         var p = agent.targetPath;
         var i = 0;
         Debug.Log("Moving to target");
+        Debug.Log("Vector count :" + p.vectorPath.Count);
         while (i < p.vectorPath.Count)
         {
+            Debug.Log("Current waypoint is : "+ i);
             var target = (Vector3)p.path[i].position;
             characterController.transform.position = Vector3.MoveTowards(agent.transform.position,target, Speed);
             if (Vector3.Distance(agent.transform.position, target) < 2)
