@@ -15,15 +15,18 @@ public class MoveTo : MonoBehaviour
     [SerializeField] public float Speed;
 
     public TrashCanManager trashCanManager;
+    
     private GameObject goal;
     private Agent agent;
     private CarState currentState;
+    private CharacterController characterController;
     
 
     void Start()
     {
         trashCanManager = FindObjectOfType<TrashCanManager>();
         agent = FindObjectOfType<Agent>();
+        characterController = FindObjectOfType<CharacterController>();
     }
 
     void Update()
@@ -101,15 +104,15 @@ public class MoveTo : MonoBehaviour
         var p = agent.targetPath;
         var i = 0;
         Debug.Log("Moving to target");
-        while (i < p.GetTotalLength())
+        while (i < p.vectorPath.Count)
         {
             var target = (Vector3)p.path[i].position;
-            agent.transform.position = Vector3.MoveTowards(agent.transform.position,target, Speed);
+            characterController.transform.position = Vector3.MoveTowards(agent.transform.position,target, Speed);
             if (Vector3.Distance(agent.transform.position, target) < 2)
             {
                 i++;
-                yield return null;
             }
+            yield return new WaitForEndOfFrame();
         }
     }
 }
