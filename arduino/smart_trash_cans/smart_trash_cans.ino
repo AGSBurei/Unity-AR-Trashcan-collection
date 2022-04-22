@@ -1,5 +1,10 @@
 #include "EspMQTTClient.h"
 
+// Globals
+const String serialNumber = "16543465453";
+const int sensorType = 1; // 1 = Tilt | 2 = Photo | 3 = IMU
+const int ledPin = 16;
+
 // TILT : GND = entrée | D3 = Sortie
 const int sensorPin = 4;
 
@@ -9,14 +14,13 @@ int limitPhotoResistor = 600;
 
 // IMU : D1 = SLC | D2 = SDA | 3V3 = VCC | GND = GND
 
-const String topic = "STC/sensor";
+// WIFI
 const char* ssid = "AP_Thomas";
 const char* password = "122345678";
-const String serialNumber = "16543465453";
-const int sensorType = 1; // 1 = Tilt | 2 = Photo | 3 = IMU
 
-bool trashCanIsFull = false;
-
+// MQTT
+const String publishTopic = "STC/sensor";
+const String subscribeTopic = "STC/" + serialNumber + "/isfull";
 EspMQTTClient client(
   ssid,
   password,
@@ -26,6 +30,8 @@ EspMQTTClient client(
   "ESP01",      // Client name that uniquely identify your device
   8883
 );
+
+bool trashCanIsFull = false;
  
 void setup() 
 {
@@ -33,21 +39,80 @@ void setup()
   Serial.println();
   Serial.println("====Projet DEV - Setup====");
 
-  //publishMeasure();
-  
+  connectWifi();
+
+  subscribeTopics();
+
+  initLed();
   initSensor();
+
+  // publishMeasure();
+
 }
  
 void loop() 
 {
-  Serial.print(".");
   client.loop();
 
-  Serial.println(digitalRead(sensorPin) == HIGH);
+  checkSensor();
 
-  //checkSensor();
+  checkIsFull();
 
   delay(500); 
+}
+
+void checkIsFull(){
+  
+  if(trashCanIsFull){
+    // Serial.println("Allume la led");
+    digitalWrite(ledPin, HIGH);    
+  }else{
+    // Serial.println("Eteint la led");
+    digitalWrite(ledPin, LOW);    
+  }
+}
+
+void initLed(){
+  pinMode(ledPin, OUTPUT);
+}
+
+void connectWifi(){
+
+  Serial.println("Connection au broker");
+
+  while(!client.isConnected()){
+    Serial.print(".");
+    client.loop();
+
+    delay(500);
+  }
+
+  Serial.println("");
+  Serial.println("Connecté au broker !");
+
+}
+
+bool subscribeTopics(){
+
+  if(client.isConnected()){
+
+    client.subscribe(subscribeTopic, [] (const String &payload)  {
+      Serial.print("Message received with topic '" + subscribeTopic + "' : " );
+      Serial.println(payload);
+
+      if(payload == "0"){
+        trashCanIsFull = false;
+      }
+
+    });
+
+    Serial.println("Le subscribe a bien été envoyée !");
+    return true;
+  }else{
+    Serial.println("La poubelle n'est pas connectée au WIFI");
+    return false;
+  }
+
 }
 
 void checkSensor(){
@@ -83,25 +148,23 @@ void initSensor(){
 
 void initTilt(){
   pinMode(sensorPin, INPUT);
-  digitalWrite(sensorPin, HIGH);
 }
 
 void checkTilt(){
-
-  Serial.println(digitalRead(sensorPin));
   
-  if(digitalRead(sensorPin))
+  if(!digitalRead(sensorPin))
   {
-    Serial.println("La poubelle est inclinée");
 
-    while(digitalRead(sensorPin)){
+    Serial.println("La poubelle est ouverte");
+
+    while(!digitalRead(sensorPin)){
       delay(500);
     }
-              
-    Serial.println("La poubelle est a plat");
+    
+    Serial.println("La poubelle est fermée");       
 
     trashCanIsFull = !trashCanIsFull;
-    // publishMeasure(); 
+    publishMeasure(); 
     Serial.print("Etat de la poubelle : ");
     Serial.println(trashCanIsFull);
   }  
@@ -151,7 +214,7 @@ void checkIMU(){
 bool publishMeasure() {
   if(client.isConnected()){
     String strState = trashCanIsFull ? "1" : "0";    
-    client.publish(topic, "{\"value\":" + strState + ",\"sn\":\"" + serialNumber + "\"}");
+    client.publish(publishTopic, "{\"value\":" + strState + ",\"sn\":\"" + serialNumber + "\"}");
 
     Serial.println("L'etat de la poubelle a bien été envoyée !");
     return true;
