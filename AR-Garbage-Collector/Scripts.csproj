@@ -53,6 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\MoveTo.cs" />
+     <Compile Include="Assets\Scripts\Agent.cs" />
      <Compile Include="Assets\Scripts\Imagerecognization.cs" />
      <Compile Include="Assets\Scripts\TrashCan.cs" />
      <Compile Include="Assets\Scripts\TrashCanManager.cs" />

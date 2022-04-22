@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8219312510726953612}
   - component: {fileID: 4823978215930141106}
   - component: {fileID: 3142573646435490022}
-  - component: {fileID: 2662202750279115353}
   m_Layer: 0
   m_Name: TrashCan
   m_TagString: Untagged
@@ -127,16 +126,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &2662202750279115353
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3491682612870261439}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.62
-  m_Center: {x: 0, y: 0, z: 0}

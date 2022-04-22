@@ -21,9 +21,14 @@ public class TrashCan : MonoBehaviour
     {
         if (collision.gameObject.name == "Car")
         {
-            _isFull = false;
-            Debug.Log("trashcan collector on :"+ gameObject.name);
-            Debug.Log(gameObject.name + " is now: " +GetIsFull());
+            if (GetIsFull())
+            {
+                _isFull = false;
+                Debug.Log("trashcan collector on :"+ gameObject.name);
+                Debug.Log(gameObject.name + " is now: " +GetIsFull());
+            }else Debug.Log(gameObject.name + " is already empty");
+
+            
         }    
     }
 }
