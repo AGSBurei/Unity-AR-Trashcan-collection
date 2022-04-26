@@ -109,8 +109,7 @@ public class MoveTo : MonoBehaviour
         Debug.Log("Vector count :" + p.vectorPath.Count);
         while (i < p.vectorPath.Count)
         {
-            Debug.Log("Current waypoint is : "+ i);
-            var target = (Vector3)p.path[i].position;
+            var target = p.vectorPath[i];
             characterController.transform.position = Vector3.MoveTowards(agent.transform.position,target, Speed);
             if (Vector3.Distance(agent.transform.position, target) < nextWaypointDistance)
             {
