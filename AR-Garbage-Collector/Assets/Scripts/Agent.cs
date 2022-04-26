@@ -13,13 +13,6 @@ public class Agent : MonoBehaviour
     {
         seeker = FindObjectOfType<Seeker>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void CalculatePath(GameObject goal)
     {
         Path p = seeker.StartPath(transform.position, goal.transform.position, OnPathComplete);
@@ -36,7 +29,6 @@ public class Agent : MonoBehaviour
         {
             Debug.Log("Wilco here the way" + p.vectorPath);
             targetPath = p;
-            
         }
     }
 }

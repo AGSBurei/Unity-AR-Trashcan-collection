@@ -15,6 +15,7 @@ public class MoveTo : MonoBehaviour
     [SerializeField] public float Speed;
 
     public TrashCanManager trashCanManager;
+    public float nextWaypointDistance;
     
     private GameObject goal;
     private Agent agent;
@@ -27,6 +28,7 @@ public class MoveTo : MonoBehaviour
         trashCanManager = FindObjectOfType<TrashCanManager>();
         agent = FindObjectOfType<Agent>();
         characterController = FindObjectOfType<CharacterController>();
+        characterController.detectCollisions = true;
     }
 
     void Update()
@@ -110,7 +112,7 @@ public class MoveTo : MonoBehaviour
             Debug.Log("Current waypoint is : "+ i);
             var target = (Vector3)p.path[i].position;
             characterController.transform.position = Vector3.MoveTowards(agent.transform.position,target, Speed);
-            if (Vector3.Distance(agent.transform.position, target) < 2)
+            if (Vector3.Distance(agent.transform.position, target) < nextWaypointDistance)
             {
                 i++;
             }
