@@ -110,7 +110,8 @@ public class MoveTo : MonoBehaviour
         while (i < p.vectorPath.Count)
         {
             var target = p.vectorPath[i];
-            characterController.transform.position = Vector3.MoveTowards(agent.transform.position,target, Speed);
+            Vector3 dir = target-agent.transform.position;
+            characterController.SimpleMove(dir.normalized*Speed);
             if (Vector3.Distance(agent.transform.position, target) < nextWaypointDistance)
             {
                 i++;

@@ -17,7 +17,7 @@ public class TrashCan : MonoBehaviour
 
     // Update is called once per frame
 
-    public void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.name == "Car")
         {
