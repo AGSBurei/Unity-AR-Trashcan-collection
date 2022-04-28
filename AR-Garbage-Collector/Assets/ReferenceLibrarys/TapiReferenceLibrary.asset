@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: TapiReferenceLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5713329681177140700
+  m_GuidHigh: 14752223078255217287
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5486924047384768083
+      m_GuidHigh: 17734912445562806449
+    m_SerializedTextureGuid:
+      m_GuidLow: 12998739763869013876
+      m_GuidHigh: 6014372848691092762
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: tapi
+    m_Texture: {fileID: 0}
