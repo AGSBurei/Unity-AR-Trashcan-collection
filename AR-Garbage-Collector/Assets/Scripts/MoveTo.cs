@@ -55,7 +55,7 @@ public class MoveTo : MonoBehaviour
 
     public void UpdateOperationMode()
     {
-        if (trashCanManager.GetFilledTrashCan() >= minimumTrashCan | isAlwaysOperating)
+        if (trashCanManager.GetFilledTrashCan() > minimumTrashCan || isAlwaysOperating)
         {
             Debug.Log("Trash can collection started");
             CheckMission();
@@ -64,6 +64,7 @@ public class MoveTo : MonoBehaviour
         {
             Debug.Log("Trash can collection halted");
             goal = null;
+            currentState = CarState.Idl;
         }
     }
 
@@ -83,11 +84,15 @@ public class MoveTo : MonoBehaviour
         {
             if (!goal.GetComponent<TrashCan>()._isFull)
             {
-                if (trashCanManager.GetFilledTrashCan() > 0)
+                if (trashCanManager.GetFilledTrashCan() > minimumTrashCan)
                 {
                     goal = trashCanManager.GetTask();
                     Debug.Log("New mission assign target is now: " + goal.gameObject.name);
                     currentState = CarState.LaunchTour;
+                }
+                else
+                {
+                    currentState = CarState.Idl;
                 }
             }
         }
