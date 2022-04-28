@@ -53,6 +53,12 @@ public class MoveTo : MonoBehaviour
         }
     }
 
+    public void SetNewMission()
+    {
+        Debug.Log("Current mission is " + goal.transform.position + " position");
+        agent.CalculatePath(goal);
+        currentState = CarState.StartMove;
+    } 
     public void UpdateOperationMode()
     {
         if (trashCanManager.GetFilledTrashCan() > minimumTrashCan || isAlwaysOperating)
@@ -67,7 +73,6 @@ public class MoveTo : MonoBehaviour
             currentState = CarState.Idl;
         }
     }
-
     public void CheckMission()
     {
         if (goal == null)
@@ -97,15 +102,7 @@ public class MoveTo : MonoBehaviour
             }
         }
     }
-
-    public void SetNewMission()
-    {
-        Debug.Log("Current mission is " + goal.transform.position + " position");
-        agent.CalculatePath(goal);
-        currentState = CarState.StartMove;
-    }
-
-     public IEnumerator MoveCar()
+    public IEnumerator MoveCar()
     {
         currentState = CarState.InTour;
         var p = agent.targetPath;

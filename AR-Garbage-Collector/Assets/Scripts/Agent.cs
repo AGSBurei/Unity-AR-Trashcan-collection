@@ -27,7 +27,7 @@ public class Agent : MonoBehaviour
         }
         else
         {
-            Debug.Log("Wilco here the way" + p.vectorPath);
+            Debug.Log("Path calculation completed");
             targetPath = p;
         }
     }
