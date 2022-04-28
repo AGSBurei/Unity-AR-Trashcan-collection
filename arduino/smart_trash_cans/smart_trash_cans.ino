@@ -1,8 +1,10 @@
 #include "EspMQTTClient.h"
 
 // Globals
-const String serialNumber = "16543465453";
-const int sensorType = 1; // 1 = Tilt | 2 = Photo | 3 = IMU
+const char* ESPSerialNumber = "16543465453"; const int sensorType = 1; // Tilt
+// const String ESPSerialNumber = "43546546312"; const int sensorType = 2; // Photo
+// const String ESPSerialNumber = "97897865"; const int sensorType = 3; // IMU
+
 const int ledPin = 16;
 
 // TILT : GND = entrée | D3 = Sortie
@@ -19,15 +21,15 @@ const char* ssid = "AP_Thomas";
 const char* password = "122345678";
 
 // MQTT
-const String publishTopic = "STC/sensor";
-const String subscribeTopic = "STC/" + serialNumber + "/isfull";
+const String publishTopic = "STC/" + String(ESPSerialNumber);
+const String subscribeTopic = publishTopic;
 EspMQTTClient client(
   ssid,
   password,
   "51.75.121.250",  // MQTT Broker server ip
   "",   // Username Can be omitted if not needed
   "",   // Password Can be omitted if not needed
-  "ESP01",      // Client name that uniquely identify your device
+  ESPSerialNumber,      // Client name that uniquely identify your device
   8883
 );
 
@@ -39,14 +41,12 @@ void setup()
   Serial.println();
   Serial.println("====Projet DEV - Setup====");
 
-  connectWifi();
-
-  subscribeTopics();
-
   initLed();
   initSensor();
 
-  // publishMeasure();
+  connectWifi();
+
+  subscribeTopics();
 
 }
  
@@ -74,6 +74,10 @@ void checkIsFull(){
 
 void initLed(){
   pinMode(ledPin, OUTPUT);
+
+  digitalWrite(ledPin, HIGH);
+  delay(2000);
+  digitalWrite(ledPin, LOW);
 }
 
 void connectWifi(){
@@ -89,6 +93,14 @@ void connectWifi(){
 
   Serial.println("");
   Serial.println("Connecté au broker !");
+  
+  // Fait clignoter la led 3x
+  for(int i =0; i < 3;i++){
+    digitalWrite(ledPin, HIGH);
+    delay(200);    
+    digitalWrite(ledPin, LOW); 
+    delay(200);    
+  }
 
 }
 
@@ -100,8 +112,15 @@ bool subscribeTopics(){
       Serial.print("Message received with topic '" + subscribeTopic + "' : " );
       Serial.println(payload);
 
-      if(payload == "0"){
+      int index1 = payload.indexOf(':');
+      int index2 = payload.indexOf(',');
+      String value = payload.substring(index1 +1, index2);
+      value.replace(" ", "");
+
+      if(value == "0"){
         trashCanIsFull = false;
+      }else if(value == "1"){
+        trashCanIsFull = true;
       }
 
     });
@@ -214,7 +233,7 @@ void checkIMU(){
 bool publishMeasure() {
   if(client.isConnected()){
     String strState = trashCanIsFull ? "1" : "0";    
-    client.publish(publishTopic, "{\"value\":" + strState + ",\"sn\":\"" + serialNumber + "\"}");
+    client.publish(publishTopic, "{\"value\":" + strState + ",\"sn\":\"" + String(ESPSerialNumber) + "\"}", true);
 
     Serial.println("L'etat de la poubelle a bien été envoyée !");
     return true;
