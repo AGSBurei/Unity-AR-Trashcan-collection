@@ -396,8 +396,14 @@
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="GitHub.Logging">
+ <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Assets/Plugins/GitHub/Editor/GitHub.Logging.dll</HintPath>
+ </Reference>
  <Reference Include="Pathfinding.Ionic.Zip.Reduced">
  <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Assets/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+ </Reference>
+ <Reference Include="GitHub.Unity.45">
+ <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Assets/Plugins/GitHub/Editor/GitHub.Unity.45.dll</HintPath>
  </Reference>
  <Reference Include="log4netPlastic">
  <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Library/PackageCache/com.unity.collab-proxy@1.15.12/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
@@ -417,23 +423,17 @@
  <Reference Include="unityplastic">
  <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Library/PackageCache/com.unity.collab-proxy@1.15.12/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Analytics.Tracker">
- <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Library/PackageCache/com.unity.analytics@3.6.12/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="GitHub.Logging">
- <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Assets/Plugins/GitHub/Editor/GitHub.Logging.dll</HintPath>
- </Reference>
  <Reference Include="sfw.net">
  <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Assets/Plugins/GitHub/Editor/sfw.net.dll</HintPath>
- </Reference>
- <Reference Include="GitHub.Unity.45">
- <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Assets/Plugins/GitHub/Editor/GitHub.Unity.45.dll</HintPath>
  </Reference>
  <Reference Include="GitHub.UnityShim">
  <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Assets/Plugins/GitHub/Editor/GitHub.UnityShim.dll</HintPath>
  </Reference>
  <Reference Include="GitHub.Api.45">
  <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Assets/Plugins/GitHub/Editor/GitHub.Api.45.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Analytics.Tracker">
+ <HintPath>C:/Users/Romma/Desktop/Projet/T-DEV-811-group19/AR-Garbage-Collector/Library/PackageCache/com.unity.analytics@3.6.12/Unity.Analytics.Tracker.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

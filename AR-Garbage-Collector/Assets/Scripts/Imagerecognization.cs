@@ -51,6 +51,19 @@ public class Imagerecognization : MonoBehaviour
     public void UpdateImage(ARTrackedImage trackedImage)
     {
         string name = trackedImage.referenceImage.name;
+        Vector3 position = trackedImage.transform.position;
+
+        GameObject aPrefab = prefabsInstances[name];
+        aPrefab.transform.position = position;
+        aPrefab.SetActive(true);
+
+        foreach (GameObject gameObject in prefabsInstances.Values)
+        {
+            if (gameObject.name != name)
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     void Start()
