@@ -8,23 +8,27 @@ public class Imagerecognization : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] prefab;
-    private Dictionary<string, GameObject> prefabsInstances = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> prefabsList = new Dictionary<string, GameObject>();
     private ARTrackedImageManager arTrackedImageManager;
 
     private void Awake()
     {
         arTrackedImageManager = FindObjectOfType<ARTrackedImageManager>();
-        foreach (GameObject prefab in prefab)
+        foreach (GameObject obj in prefab)
         {
-            GameObject newPrefab = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-            newPrefab.name = prefab.name;
-            prefabsInstances.Add(prefab.name, newPrefab);
+            //TODO check Vector zero
+            GameObject newPrefab = Instantiate(obj, Vector3.zero, Quaternion.identity);
+            newPrefab.name = obj.name;
+            newPrefab.SetActive(false);
+            Debug.LogWarning("object details : " + "obj name : " + obj.name + "object is : " +  newPrefab);
+            prefabsList.Add(obj.name, newPrefab);
         }
     }
 
     public void OnEnable()
     {
         arTrackedImageManager.trackedImagesChanged += OnImageChanged;
+
     }
 
     public void OnDisable()
@@ -44,36 +48,24 @@ public class Imagerecognization : MonoBehaviour
         }
         foreach(ARTrackedImage trackedImage in args.removed)
         {
-            prefabsInstances[trackedImage.name].SetActive(false);
+            prefabsList[trackedImage.name].SetActive(false);
         }
     }
 
     public void UpdateImage(ARTrackedImage trackedImage)
     {
+
         string name = trackedImage.referenceImage.name;
-        Vector3 position = trackedImage.transform.position;
-
-        GameObject aPrefab = prefabsInstances[name];
-        aPrefab.transform.position = position;
-        aPrefab.SetActive(true);
-
-        foreach (GameObject gameObject in prefabsInstances.Values)
+        prefabsList[name].transform.position = trackedImage.transform.position;
+        prefabsList[name].transform.rotation = trackedImage.transform.rotation;
+        prefabsList[name].SetActive(true);
+        Debug.LogWarning("key is : " + name);
+        foreach (GameObject gameObject in prefabsList.Values)
         {
             if (gameObject.name != name)
             {
                 gameObject.SetActive(false);
             }
         }
-    }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
