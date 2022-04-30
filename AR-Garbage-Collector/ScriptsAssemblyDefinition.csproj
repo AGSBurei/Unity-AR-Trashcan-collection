@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Imagerecognization.cs" />
      <Compile Include="Assets\Scripts\TrashCan.cs" />
      <Compile Include="Assets\Scripts\TrashCanManager.cs" />
+     <Compile Include="Assets\Scripts\CallAPI.cs" />
      <None Include="Assets\Scripts\ScriptsAssemblyDefinition.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
