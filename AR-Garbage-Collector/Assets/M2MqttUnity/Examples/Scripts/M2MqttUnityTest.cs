@@ -65,6 +65,10 @@ namespace M2MqttUnity.Examples
             base.OnConnected();
             Debug.Log("Connected to broker on " + brokerAddress + "\n");
 
+
+            myTrashCanManager = FindObjectOfType<TrashCanManager>();
+            Debug.Log(myTrashCanManager.GetTrashNumber());
+
         }
 
         protected override void DecodeMessage(string topic, byte[] message)
@@ -73,9 +77,7 @@ namespace M2MqttUnity.Examples
             Debug.Log("Received: " + msg);
 
             //TODO mettre a jour l'etat de nos poubelle
-            Debug.Log("TRASH CAN LIST COUNT");
-            Debug.Log(TrashCanManager.trashCanList.Count);
-
+            
             myTrashCanManager = FindObjectOfType<TrashCanManager>();
             Debug.Log(myTrashCanManager.GetTrashNumber());
         }

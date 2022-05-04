@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TrashCanManager : MonoBehaviour
 {
-    [SerializeField] static public List<TrashCan> trashCanList= new List<TrashCan>();
+    [SerializeField] public List<TrashCan> trashCanList= new List<TrashCan>();
     private List<TrashCan> _filledTrashCanList = new List<TrashCan>();
     // Update is called once per frame
     void Update()
