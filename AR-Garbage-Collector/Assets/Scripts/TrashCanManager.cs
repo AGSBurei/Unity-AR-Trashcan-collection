@@ -46,5 +46,9 @@ public class TrashCanManager : MonoBehaviour
             }
         }
     }
+    public int GetTrashNumber()
+    {
+        return trashCanList.Count;
+    }
     
 }

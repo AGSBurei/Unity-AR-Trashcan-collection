@@ -13,6 +13,8 @@ namespace M2MqttUnity.Examples
     { 
         private List<string> eventMessages = new List<string>();
 
+        TrashCanManager myTrashCanManager; 
+
         // Public Functions
 
         public void PublishTrashCansEmpty(String trashCanId){
@@ -73,7 +75,9 @@ namespace M2MqttUnity.Examples
             //TODO mettre a jour l'etat de nos poubelle
             Debug.Log("TRASH CAN LIST COUNT");
             Debug.Log(TrashCanManager.trashCanList.Count);
-            
+
+            myTrashCanManager = FindObjectOfType<TrashCanManager>();
+            Debug.Log(myTrashCanManager.GetTrashNumber());
         }
 
         private void Publish(String topic, String body){
