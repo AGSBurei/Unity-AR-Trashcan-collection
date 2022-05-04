@@ -3,13 +3,9 @@ using UnityEngine;
 
 public class TrashCanManager : MonoBehaviour
 {
-    [SerializeField] public List<TrashCan> trashCanList= new List<TrashCan>();
+    [SerializeField] static public List<TrashCan> trashCanList= new List<TrashCan>();
     private List<TrashCan> _filledTrashCanList = new List<TrashCan>();
     // Update is called once per frame
-    void Start()
-    {
-        // trashCanList = FindObjectsOfType<TrashCan>;
-    }
     void Update()
     {
         RefreshFilledTrashCanCount();

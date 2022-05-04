@@ -800,9 +800,9 @@
       <Project>{731f23f3-f7ce-0252-6f99-a8ef0c28a7bd}</Project>
       <Name>AstarPathfindingProject</Name>
     </ProjectReference>
-    <ProjectReference Include="ScriptsAssemblyDefinition.csproj">
-      <Project>{6694d680-e0ab-0875-6d45-b3bc4a5b00d8}</Project>
-      <Name>ScriptsAssemblyDefinition</Name>
+    <ProjectReference Include="Scripts.csproj">
+      <Project>{01e3c4ca-a375-3f1d-e825-2abdced27168}</Project>
+      <Name>Scripts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

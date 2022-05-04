@@ -72,7 +72,7 @@ namespace M2MqttUnity.Examples
 
             //TODO mettre a jour l'etat de nos poubelle
             Debug.Log("TRASH CAN LIST COUNT");
-            // Debug.Log(TrashCanManager.trashCanList.Count);
+            Debug.Log(TrashCanManager.trashCanList.Count);
             
         }
 

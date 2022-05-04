@@ -13,7 +13,6 @@ public class TrashCan : MonoBehaviour
     void Start()
     {
         _isFull = true;
-        TrashCanManager.AddTrashCan(this);
     }
 
     // Update is called once per frame

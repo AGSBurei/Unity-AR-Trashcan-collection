@@ -1,11 +1,9 @@
 {
-    "name": "ScriptsAssemblyDefinition",
+    "name": "Scripts",
     "rootNamespace": "",
     "references": [
         "GUID:efa45043feb7e4147a305b73b5cea642",
-        "GUID:a9420e37d7990b54abdef6688edbe313",
-        "GUID:7f759c464cb5ea8448d441f13b57aec0",
-        "GUID:92703082f92b41ba80f0d6912de66115"
+        "GUID:a9420e37d7990b54abdef6688edbe313"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
