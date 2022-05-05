@@ -68,13 +68,14 @@ public class MoveTo : MonoBehaviour
         }
         else
         {
-            Debug.Log("Trash can collection halted");
+            // Debug.Log("Trash can collection halted");
             goal = null;
             currentState = CarState.Idl;
         }
     }
     public void CheckMission()
     {
+
         if (goal == null)
         {
             if (trashCanManager.GetFilledTrashCan() > 0)
@@ -99,7 +100,7 @@ public class MoveTo : MonoBehaviour
                 {
                     currentState = CarState.Idl;
                 }
-            }
+            } 
         }
     }
     public IEnumerator MoveCar()
@@ -109,6 +110,7 @@ public class MoveTo : MonoBehaviour
         var i = 0;
         Debug.Log("Moving to target");
         Debug.Log("Vector count :" + p.vectorPath.Count);
+
         while (i < p.vectorPath.Count)
         {
             var target = p.vectorPath[i];

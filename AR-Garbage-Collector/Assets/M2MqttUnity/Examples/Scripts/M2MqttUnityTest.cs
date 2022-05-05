@@ -22,7 +22,10 @@ namespace M2MqttUnity.Examples
 
         public void PublishTrashCansEmpty(String trashCanId)
         {
-            Publish2("STC/" + trashCanId, "{\"sn\":\"" + trashCanId + "\",\"value\":\"0\"}");
+            Debug.Log("HEEEEEEEEEEEEEEEEEEEERE");
+            Debug.Log(trashCanId);
+            // Publish2("STC/" + trashCanId, "{\"sn\":\"" + trashCanId + "\",\"value\":\"0\"}");
+            Publish2("STC/" + trashCanId, "{\"value\":\"0\",\"sn\":\"" + trashCanId + "\"}");
         }
 
         private void SubscribeTrashCan()
@@ -45,10 +48,17 @@ namespace M2MqttUnity.Examples
 
                         if (copyListTrashCan[y, 1] != myTrashCanManager.trashCanList[i]._isFull.ToString())
                         {
-                            string state = copyListTrashCan[y, 0];
-                            Debug.Log(state);
-                            PublishTrashCansEmpty(state);
-                            copyListTrashCan[y, 1] = myTrashCanManager.trashCanList[i]._isFull.ToString();
+                            if (myTrashCanManager.trashCanList[i]._isFull)
+                            {
+                                copyListTrashCan[y, 1] = myTrashCanManager.trashCanList[i]._isFull.ToString();
+                            }
+                            else
+                            {
+                                string serial = copyListTrashCan[y, 0];
+                                Debug.Log(serial);
+                                PublishTrashCansEmpty(serial);
+                                copyListTrashCan[y, 1] = myTrashCanManager.trashCanList[i]._isFull.ToString();
+                            }
                         }
                     }
                 }
@@ -88,28 +98,22 @@ namespace M2MqttUnity.Examples
             base.OnConnected();
             Debug.Log("Connected to broker on " + brokerAddress + "\n");
 
-
-            Debug.Log(myTrashCanManager.GetTrashNumber());
-            Debug.Log(myTrashCanManager.GetTrashNumberFilled());
-
-
         }
 
         protected override async void DecodeMessage(string topic, byte[] message)
         {
             string msg = System.Text.Encoding.UTF8.GetString(message);
             Debug.Log("Received: " + msg);
-            
-            string sn = msg.Split('\"')[3].Split('\"')[0];
-            string value = msg.Split('\"')[7].Split('\"')[0];
-            Debug.Log(sn);
-            Debug.Log(value);
 
-            for(int i = 0; i < myTrashCanManager.trashCanList.Count; i++)
+            string sn = msg.Split('\"')[7].Split('\"')[0];
+            string value = msg.Split('\"')[3].Split('\"')[0];
+
+
+            for (int i = 0; i < myTrashCanManager.trashCanList.Count; i++)
             {
-                if(sn == myTrashCanManager.trashCanList[i].serial)
+                if (sn == myTrashCanManager.trashCanList[i].serial)
                 {
-                    myTrashCanManager.trashCanList[i]._isFull = value == "0" ? false : true ;
+                    myTrashCanManager.trashCanList[i]._isFull = value == "0" ? false : true;
                 }
             }
 

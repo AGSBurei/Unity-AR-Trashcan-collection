@@ -677,6 +677,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3193655614596348808, guid: f43dd7d668d3ba4409c428cf62a703fc, type: 3}
+      propertyPath: trashCanList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439629248938671036, guid: f43dd7d668d3ba4409c428cf62a703fc, type: 3}
+      propertyPath: serial
+      value: 97897865
+      objectReference: {fileID: 0}
+    - target: {fileID: 6125481505011681613, guid: f43dd7d668d3ba4409c428cf62a703fc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312081615371412197, guid: f43dd7d668d3ba4409c428cf62a703fc, type: 3}
+      propertyPath: isAlwaysOperating
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312081615371412197, guid: f43dd7d668d3ba4409c428cf62a703fc, type: 3}
+      propertyPath: nextWaypointDistance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420508351522105419, guid: f43dd7d668d3ba4409c428cf62a703fc, type: 3}
+      propertyPath: serial
+      value: 43546546312
+      objectReference: {fileID: 0}
+    - target: {fileID: 8380031241925977150, guid: f43dd7d668d3ba4409c428cf62a703fc, type: 3}
+      propertyPath: serial
+      value: 16543465453
+      objectReference: {fileID: 0}
     - target: {fileID: 8558058829878045933, guid: f43dd7d668d3ba4409c428cf62a703fc, type: 3}
       propertyPath: m_RootOrder
       value: 1
