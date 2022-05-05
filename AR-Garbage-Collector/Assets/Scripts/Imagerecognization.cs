@@ -6,30 +6,64 @@ using UnityEngine.XR.ARFoundation;
 
 public class Imagerecognization : MonoBehaviour
 {
-    private ARTrackedImageManager _arTrackedImageManager;
-    
+    [SerializeField]
+    private GameObject[] prefab;
+    private Dictionary<string, GameObject> prefabsInstances = new Dictionary<string, GameObject>();
+    private ARTrackedImageManager arTrackedImageManager;
+
     private void Awake()
     {
-        _arTrackedImageManager = FindObjectOfType<ARTrackedImageManager>();
+        arTrackedImageManager = FindObjectOfType<ARTrackedImageManager>();
+        foreach (GameObject prefab in prefab)
+        {
+            GameObject newPrefab = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+            newPrefab.name = prefab.name;
+            prefabsInstances.Add(prefab.name, newPrefab);
+        }
     }
 
     public void OnEnable()
     {
-        _arTrackedImageManager.trackedImagesChanged += OnImageChanged;
+        arTrackedImageManager.trackedImagesChanged += OnImageChanged;
     }
 
     public void OnDisable()
     {
-        _arTrackedImageManager.trackedImagesChanged -= OnImageChanged;
+        arTrackedImageManager.trackedImagesChanged -= OnImageChanged;
     }
 
     public void OnImageChanged(ARTrackedImagesChangedEventArgs args)
     {
-        foreach(var trackedImage in args.added)
+        foreach(ARTrackedImage trackedImage in args.added)
         {
-            Debug.Log(trackedImage.name);
+            UpdateImage(trackedImage);
         }
+        foreach(ARTrackedImage trackedImage in args.updated)
+        {
+            UpdateImage(trackedImage);
+        }
+        foreach(ARTrackedImage trackedImage in args.removed)
+        {
+            prefabsInstances[trackedImage.name].SetActive(false);
+        }
+    }
 
+    public void UpdateImage(ARTrackedImage trackedImage)
+    {
+        string name = trackedImage.referenceImage.name;
+        Vector3 position = trackedImage.transform.position;
+
+        GameObject aPrefab = prefabsInstances[name];
+        aPrefab.transform.position = position;
+        aPrefab.SetActive(true);
+
+        foreach (GameObject gameObject in prefabsInstances.Values)
+        {
+            if (gameObject.name != name)
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     void Start()
