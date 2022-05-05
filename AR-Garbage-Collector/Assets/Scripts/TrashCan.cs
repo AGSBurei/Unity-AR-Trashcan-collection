@@ -1,8 +1,10 @@
 using UnityEngine;
 
+
 public class TrashCan : MonoBehaviour
 {
     public bool _isFull;
+    public string serial;
 
     public bool GetIsFull()
     {
@@ -12,7 +14,7 @@ public class TrashCan : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _isFull = true;
+        _isFull = false;
     }
 
     // Update is called once per frame
@@ -26,6 +28,8 @@ public class TrashCan : MonoBehaviour
                 _isFull = false;
                 Debug.Log("trashcan collector on :"+ gameObject.name);
                 Debug.Log(gameObject.name + " is now: " +GetIsFull());
+
+                
             }else Debug.Log(gameObject.name + " is already empty");
 
             

@@ -10,50 +10,73 @@ using M2MqttUnity;
 namespace M2MqttUnity.Examples
 {
     public class M2MqttUnityTest : M2MqttUnityClient
-    { 
+    {
         private List<string> eventMessages = new List<string>();
 
-        TrashCanManager myTrashCanManager; 
+        TrashCanManager myTrashCanManager;
+
+        String[,] copyListTrashCan = new String[3, 2];
+
 
         // Public Functions
 
-        public void PublishTrashCansEmpty(String trashCanId){
-            Publish("STC/" + trashCanId, "{\"sn\":\"" + trashCanId + "\",\"value\":\"0\"}");
+        public void PublishTrashCansEmpty(String trashCanId)
+        {
+            Publish2("STC/" + trashCanId, "{\"sn\":\"" + trashCanId + "\",\"value\":\"0\"}");
         }
 
-        private void SubscribeTrashCan(){
+        private void SubscribeTrashCan()
+        {
             Subscribe("STC/#");
         }
 
         // Main Functions
 
-        protected override void Start()
+        protected override async void Update()
+        {
+            base.Update();
+
+            for (int i = 0; i < myTrashCanManager.trashCanList.Count; i++)
+            {
+                for (int y = 0; y < myTrashCanManager.trashCanList.Count; y++)
+                {
+                    if (copyListTrashCan[y, 0] == myTrashCanManager.trashCanList[i].serial)
+                    {
+
+                        if (copyListTrashCan[y, 1] != myTrashCanManager.trashCanList[i]._isFull.ToString())
+                        {
+                            string state = copyListTrashCan[y, 0];
+                            Debug.Log(state);
+                            PublishTrashCansEmpty(state);
+                            copyListTrashCan[y, 1] = myTrashCanManager.trashCanList[i]._isFull.ToString();
+                        }
+                    }
+                }
+            }
+
+
+        }
+        protected override async void Start()
         {
             base.Start();
 
-            //todo need test
-            // this.Connect();
+            Debug.Log("START !!!");
+
+            myTrashCanManager = FindObjectOfType<TrashCanManager>();
+
+            for (int i = 0; i < myTrashCanManager.trashCanList.Count; i++)
+            {
+                copyListTrashCan[i, 0] = myTrashCanManager.trashCanList[i].serial;
+                copyListTrashCan[i, 1] = myTrashCanManager.trashCanList[i]._isFull.ToString();
+            }
+
         }
 
-        protected override void Update()
+
+        protected override void SubscribeTopics()
         {
-            base.Update(); 
-
-            // if (eventMessages.Count > 0)
-            // {
-            //     foreach (string msg in eventMessages)
-            //     {
-            //         ProcessMessage(msg);
-            //     }
-            //     eventMessages.Clear();
-            // }
-            
-        }
-
-
-        protected override void SubscribeTopics(){
             Debug.Log("SUbscribeTopics Thomas !");
-            
+
             // TODO a tester
             SubscribeTrashCan();
         }
@@ -66,24 +89,44 @@ namespace M2MqttUnity.Examples
             Debug.Log("Connected to broker on " + brokerAddress + "\n");
 
 
-            myTrashCanManager = FindObjectOfType<TrashCanManager>();
             Debug.Log(myTrashCanManager.GetTrashNumber());
+            Debug.Log(myTrashCanManager.GetTrashNumberFilled());
+
 
         }
 
-        protected override void DecodeMessage(string topic, byte[] message)
+        protected override async void DecodeMessage(string topic, byte[] message)
         {
             string msg = System.Text.Encoding.UTF8.GetString(message);
             Debug.Log("Received: " + msg);
-
-            //TODO mettre a jour l'etat de nos poubelle
             
-            myTrashCanManager = FindObjectOfType<TrashCanManager>();
-            Debug.Log(myTrashCanManager.GetTrashNumber());
+            string sn = msg.Split('\"')[3].Split('\"')[0];
+            string value = msg.Split('\"')[7].Split('\"')[0];
+            Debug.Log(sn);
+            Debug.Log(value);
+
+            for(int i = 0; i < myTrashCanManager.trashCanList.Count; i++)
+            {
+                if(sn == myTrashCanManager.trashCanList[i].serial)
+                {
+                    myTrashCanManager.trashCanList[i]._isFull = value == "0" ? false : true ;
+                }
+            }
+
+
         }
 
-        private void Publish(String topic, String body){
-            client.Publish(topic, System.Text.Encoding.UTF8.GetBytes(body), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        private void Publish2(String topic, String body)
+        {
+            if (client != null)
+            {
+
+                client.Publish(topic, System.Text.Encoding.UTF8.GetBytes(body), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+            }
+            else
+            {
+                Debug.Log("client is null");
+            }
         }
 
         private void Subscribe(String topic)
@@ -124,7 +167,7 @@ namespace M2MqttUnity.Examples
 
         private void OnValidate()
         {
-            autoConnect = true; 
+            autoConnect = true;
         }
     }
 }

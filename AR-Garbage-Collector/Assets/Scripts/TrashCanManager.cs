@@ -50,5 +50,8 @@ public class TrashCanManager : MonoBehaviour
     {
         return trashCanList.Count;
     }
-    
+    public int GetTrashNumberFilled()
+    {
+        return _filledTrashCanList.Count;
+    }
 }
